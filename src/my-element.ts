@@ -38,7 +38,12 @@ export class MyElement extends LitElement {
       <div class="todo-container">
         <h1>My Todo List</h1>
         <div class="todo-input">
-          <input type="text" id="todoInput" placeholder="Add a new task..." />
+          <input
+            type="text"
+            id="todoInput"
+            placeholder="Add a new task..."
+            @keydown=${this._handleAddTodoOnEnterPress}
+          />
           <button @click=${this._handleAddTodo}>Add</button>
         </div>
 
@@ -70,6 +75,12 @@ export class MyElement extends LitElement {
         </ul>
       </div>
     `;
+  }
+
+  private _handleAddTodoOnEnterPress(event: KeyboardEvent) {
+    if (event.key === "Enter" && this._todoInput.value) {
+      this._handleAddTodo();
+    }
   }
 
   private debouncedCheckTodo = this.debounce((id: string) => {
